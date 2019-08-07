@@ -1,0 +1,20 @@
+﻿@page "/settings"
+
+
+<h1>Settings</h1>
+
+<CarsList Cars="@cars"></CarsList>   
+
+<form>
+    <div class="form-group">
+        <label for="vehicleIdentifier">Vehicle</label>
+        <input type="text" class="form-control" id="vehicleIdentifier" aria-describedby="vehicleIdentifierDescription" placeholder="Enter identifier">
+        <small id="vehicleIdentifier" class="form-text text-muted">Describe your vehicle</small>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+@code {
+    IEnumerable <Area> areas;
+    IEnumerable <Car> cars;
+}

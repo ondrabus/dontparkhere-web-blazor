@@ -1,0 +1,21 @@
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">Identifier</th>
+      <th scope="col">Zone allowance</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      @foreach (Car car in Cars)
+      {
+        <td>@car.Identifier</td>
+        <td>@car.ZoneId</td>
+      }
+    </tr>
+  </tbody>
+</table>
+
+@code {
+  [Parameter] IEnumerable<Car> Cars { get; set; }
+}
