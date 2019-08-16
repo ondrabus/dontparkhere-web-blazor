@@ -1,0 +1,33 @@
+﻿@inherits MapBase
+
+@page "/map"
+
+<h1>Map</h1>
+
+<div>Location: @Longitude, @Latitude</div>
+@if (OverlappingAreas)
+{
+    <div>Your position is on the border of multiple areas. Please move to get better accuracy of your position.</div>
+}
+else
+{
+    @if (IntersectingArea != null)
+    {
+        <div>Area: @IntersectingArea?.System.Name</div>
+        @if (VisitorRestrictions != null)
+        {
+            foreach (var restriction in VisitorRestrictions)
+            {
+                @(new MarkupString(restriction.Description))
+            }
+        }
+    }
+    else
+    {
+        <div>You're fine</div>
+    }
+}
+
+<div class="mapContainer">
+    <div id="m"></div>
+</div>
