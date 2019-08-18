@@ -28,6 +28,7 @@ namespace DontParkHere
             services.AddSingleton<MapService>();
             services.AddSingleton<RestrictionService>();
             services.AddSingleton<UserService>();
+            services.AddSingleton<ParkingMachineService>();
         }
 
         private IConfiguration GetConfiguration()

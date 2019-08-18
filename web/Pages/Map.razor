@@ -21,6 +21,16 @@ else
                 @(new MarkupString(restriction.Description))
             }
         }
+        
+        @if (ParkingMachines != null)
+        {
+            <div>
+                @foreach (var machine in ParkingMachines)
+                {
+                    <div>@machine.LocationObj.Latitude, @machine.LocationObj.Longitude</div>
+                }
+            </div>
+        }
     }
     else
     {

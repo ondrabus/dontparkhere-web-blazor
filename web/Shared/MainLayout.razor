@@ -23,7 +23,7 @@
     IEnumerable<Area> areas;
     private CustomTypeProvider TypeProvider { get; } = new CustomTypeProvider();
 
-    protected override async Task OnInitAsync()
+    protected override async Task OnInitializedAsync()
     {
         var projectId = "7018f14f-f1c3-0111-8a5b-f14953cccaa4";
         var client = DeliveryClientBuilder.WithProjectId(projectId).WithHttpClient(Http).WithTypeProvider(TypeProvider).Build();
