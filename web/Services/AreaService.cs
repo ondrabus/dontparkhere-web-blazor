@@ -23,7 +23,7 @@ namespace DontParkHere.Services
             _jsRuntime = jsRuntime;
         }
 
-        private async Task<IReadOnlyList<Area>> GetAllAreasAsync()
+        public async Task<IReadOnlyList<Area>> GetAllAreasAsync()
         {
             if (_areas == null)
             {

@@ -23,7 +23,7 @@ namespace DontParkHere.Pages
 
         [Inject]
         protected MapService MapService { get; set; }
-        
+
         [Inject]
         protected RestrictionService RestrictionService { get; set; }
 

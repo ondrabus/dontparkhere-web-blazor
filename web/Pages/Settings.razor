@@ -1,20 +1,35 @@
 ﻿@page "/settings"
+@using DontParkHere.Components
 
 
 <h1>Settings</h1>
 
-@*<CarsList Cars="@cars"></CarsList>*@   
+@inherits SettingsBase
+
+<CarsList Cars="@Cars"></CarsList>
 
 <form>
-    <div class="form-group">
-        <label for="vehicleIdentifier">Vehicle</label>
-        <input type="text" class="form-control" id="vehicleIdentifier" aria-describedby="vehicleIdentifierDescription" placeholder="Enter identifier">
-        <small id="vehicleIdentifier" class="form-text text-muted">Describe your vehicle</small>
+    <div class="row">
+        <div class="form-group col-sm-6 col-md-4">
+            <label for="vehicleIdentifier">Vehicle</label>
+            <input type="text" class="form-control" id="vehicleIdentifier" aria-describedby="vehicleIdentifierDescription"
+                   placeholder="Enter identifier" @bind="@NewCar.Identifier" data-validation-required-message="Please enter car identifier." />
+            <small id="vehicleIdentifier" class="form-text text-muted">Describe your vehicle</small>
+        </div>
+        <div class="form-group col-sm-6 col-md-4">
+            <label for="area">Area</label>
+            <select id="area" @bind="@NewCar.ZoneId">
+                <option value="">(no permit)</option>
+                @foreach (var area in Areas)
+                {
+                    <option value="@area.System.Id">@area.System.Name</option>
+                }
+            </select>
+        </div>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <div class="row">
+        <div class="col-sm-6 col-md-4">
+            <button type="submit" class="btn btn-primary" @onclick=@AddCar>Add</button>
+        </div>
+    </div>
 </form>
-
-@code {
-    IEnumerable <Area> areas;
-    IEnumerable <Car> cars;
-}
