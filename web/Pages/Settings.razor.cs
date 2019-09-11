@@ -1,9 +1,10 @@
-﻿using DontParkHere.Models;
+﻿using AspNetMonsters.Blazor.Geolocation;
+using DontParkHere.Models;
 using DontParkHere.Services;
 using KenticoCloudModels;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,24 +19,14 @@ namespace DontParkHere.Pages
         [Inject]
         protected CarService CarService { get; set; }
 
+        protected IReadOnlyList<Area> Areas { get; set; }
+
         protected Car NewCar = new Car();
-        protected IEnumerable<Area> Areas { get; set; }
-        protected IEnumerable<Car> Cars { get; set; }
 
-        protected void AddCar()
+        protected List<Car> Cars { get; set; }
+
+        public SettingsBase()
         {
-            try
-            {
-                var car = NewCar;
-                CarService.SaveCar(car);
-                NewCar = new Car();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-
-            StateHasChanged();
         }
 
         protected override async Task OnInitializedAsync()
@@ -44,8 +35,18 @@ namespace DontParkHere.Pages
             Cars = new List<Car>();
 
             Areas = await AreaService.GetAllAreasAsync();
-            Console.WriteLine("Got " + Areas.Count() + " areas");
-            Cars = await CarService.GetCars();
+            Cars = await CarService.GetCarsAsync();
         }
+
+        protected void AddCar()
+        {
+            var car = NewCar;
+            CarService.SaveCarAsync(car);
+            Cars.Add(car);
+            NewCar = new Car();
+
+            StateHasChanged();
+        }
+
     }
 }

@@ -1,21 +1,32 @@
 <table class="table table-bordered">
-  <thead>
-    <tr>
-      <th scope="col">Identifier</th>
-      <th scope="col">Zone allowance</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      @foreach (Car car in Cars)
-      {
-        <td>@car.Identifier</td>
-        <td>@car.ZoneId</td>
-      }
-    </tr>
-  </tbody>
+    <thead>
+        <tr>
+            <th scope="col">Identifier</th>
+            <th scope="col">Zone allowance</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Car car in Cars)
+        {
+            <tr>
+                <td>@car.Identifier</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(car.ZoneId) && Areas != null)
+                    {
+                        @Areas.SingleOrDefault(a => a.System.Id == car.ZoneId)?.System.Name
+                    }
+                    else
+                    {
+                        @:(no zone)
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
 
 @code {
-    [Parameter] public IEnumerable<Car> Cars { get; set; }
-}
+        [Parameter] public IEnumerable<Car> Cars { get; set; }
+
+        [Parameter] public IEnumerable<Area> Areas { get; set; }
+    }

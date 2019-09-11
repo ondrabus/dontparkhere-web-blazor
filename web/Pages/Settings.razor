@@ -1,12 +1,10 @@
-﻿@page "/settings"
-@using DontParkHere.Components
+﻿@inherits SettingsBase
 
+@page "/settings"
 
 <h1>Settings</h1>
 
-@inherits SettingsBase
-
-<CarsList Cars="@Cars"></CarsList>
+<DontParkHere.Components.CarsList Cars="@Cars" Areas="@Areas"></DontParkHere.Components.CarsList>
 
 <form>
     <div class="row">
@@ -18,7 +16,7 @@
         </div>
         <div class="form-group col-sm-6 col-md-4">
             <label for="area">Area</label>
-            <select id="area" @bind="@NewCar.ZoneId">
+            <select id="area" @bind="@NewCar.ZoneId" class="form-control">
                 <option value="">(no permit)</option>
                 @foreach (var area in Areas)
                 {
@@ -29,7 +27,7 @@
     </div>
     <div class="row">
         <div class="col-sm-6 col-md-4">
-            <button type="submit" class="btn btn-primary" @onclick=@AddCar>Add</button>
+            <button type="button" class="btn btn-primary" @onclick="@AddCar">Add</button>
         </div>
     </div>
 </form>

@@ -12,15 +12,13 @@ namespace DontParkHere.Services
     public class ParkingMachineService
     {
         private CloudDeliveryService _cloudDeliveryService;
-        private IJSRuntime _jsRuntime;
         private static IReadOnlyList<ParkingMachine> _parkingMachines;
         // get parking machines from Kentico Cloud
         // invoke frontend JavaScript
         
-        public ParkingMachineService(CloudDeliveryService cloudDeliveryService, IJSRuntime jsRuntime)
+        public ParkingMachineService(CloudDeliveryService cloudDeliveryService)
         {
             _cloudDeliveryService = cloudDeliveryService;
-            _jsRuntime = jsRuntime;
         }
 
         private async Task<IReadOnlyList<ParkingMachine>> GetAllParkingMachinesAsync()

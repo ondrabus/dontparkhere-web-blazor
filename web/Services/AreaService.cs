@@ -41,5 +41,11 @@ namespace DontParkHere.Services
             return intersectingAreas;
         }
 
+        public async Task<Area> GetAreaById(string Id)
+        {
+            var areas = await GetAllAreasAsync();
+            return areas.SingleOrDefault(a => a.System.Id == Id);
+        }
+
     }
 }
