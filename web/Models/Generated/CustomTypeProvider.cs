@@ -12,6 +12,7 @@ namespace KenticoCloudModels
             {typeof(Area), "area"},
             {typeof(Duration), "duration"},
             {typeof(ParkingMachine), "parking_machine"},
+            {typeof(PublicHoliday), "public_holiday"},
             {typeof(ResidentRestriction), "resident_restriction"},
             {typeof(VisitorRestriction), "visitor_restriction"}
         };

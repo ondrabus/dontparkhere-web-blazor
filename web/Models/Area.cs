@@ -11,7 +11,9 @@ namespace KenticoCloudModels
     {
         public List<Location> GetPolygon()
         {
-            var data = JsonSerializer.Deserialize<List<List<double>>>(this.AreaData);
+            // sanitize area data
+            var areaData = this.AreaData.Replace('"', ' ');
+            var data = JsonSerializer.Deserialize<List<List<double>>>(areaData);
             return data.Select(c => new Location { Latitude = Convert.ToDecimal(c[0]), Longitude = Convert.ToDecimal(c[1]), Accuracy = 1 }).ToList();
         }
 

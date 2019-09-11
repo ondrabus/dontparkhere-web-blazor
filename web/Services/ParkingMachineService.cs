@@ -1,11 +1,11 @@
 ﻿using AspNetMonsters.Blazor.Geolocation;
+using DontParkHere.Helpers;
 using KenticoCloudModels;
 using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DontParkHere.Helpers;
 
 namespace DontParkHere.Services
 {
@@ -13,8 +13,10 @@ namespace DontParkHere.Services
     {
         private CloudDeliveryService _cloudDeliveryService;
         private IJSRuntime _jsRuntime;
-        private static IReadOnlyList<ParkingMachine> _parkingMachines = null;
-
+        private static IReadOnlyList<ParkingMachine> _parkingMachines;
+        // get parking machines from Kentico Cloud
+        // invoke frontend JavaScript
+        
         public ParkingMachineService(CloudDeliveryService cloudDeliveryService, IJSRuntime jsRuntime)
         {
             _cloudDeliveryService = cloudDeliveryService;
@@ -32,10 +34,10 @@ namespace DontParkHere.Services
             return _parkingMachines;
         }
 
-        public async Task<List<ParkingMachine>> GetNearestParkingMachines(Location point, int count = 2)
+        public async Task<List<ParkingMachine>> GetNearestParkingMachines(Location point)
         {
             var parkingMachines = await GetAllParkingMachinesAsync();
-            return parkingMachines.OrderBy(p => p.LocationObj.GetDistanceTo(point)).Take(count).ToList();
+            return parkingMachines.OrderBy(p => p.LocationObj.GetDistanceTo(point)).Take(2).ToList();
         }
     }
 }

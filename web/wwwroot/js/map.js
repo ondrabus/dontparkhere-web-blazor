@@ -24,14 +24,10 @@ function mapInit() {
     var mouse = new SMap.Control.Mouse(SMap.MOUSE_PAN | SMap.MOUSE_WHEEL | SMap.MOUSE_ZOOM);
     map.addControl(mouse);
 
-    markerLayer = new SMap.Layer.Marker();
-    map.addLayer(markerLayer);
-    markerLayer.enable();
-
     map.getSignals().addListener(window, "map-click", function (e, elm) {
         var coords = SMap.Coords.fromEvent(e.data.event, map);
-        DotNet.invokeMethodAsync('DontParkHere', 'SetLocation', coords.y, coords.x, 1);
         mapCenter(coords.y, coords.x);
+        DotNet.invokeMethodAsync('DontParkHere', 'SetLocation', coords.y, coords.x, 1);
     });
 }
 
@@ -44,18 +40,23 @@ function mapCenter(latitude, longitude) {
 function mapSetParkingMachines(parkingMachine1, parkingMachine2) {
     let parkingMachines = [parkingMachine1, parkingMachine2];
 
-    map.getControls().filter(c => "_alwaysShow" in c).forEach(c => map.removeControl(c));
-    markerLayer.removeAll();
+    //map.getControls().filter(c => "_alwaysShow" in c).forEach(c => map.removeControl(c));
+    if (markerLayer) {
+        markerLayer.disable();
+    }
+    markerLayer = null;
+
+    markerLayer = new SMap.Layer.Marker();
+    map.addLayer(markerLayer);
+    markerLayer.enable();
 
     for (let i = 0; i < parkingMachines.length; i++) {
         let image = JAK.mel("img", { className: "meter", src: "./img/meter.png" });
         markerLayer.addMarker(new SMap.Marker(SMap.Coords.fromWGS84(parkingMachines[i].longitude, parkingMachines[i].latitude), "Parking machine", { url: image }));
 
-        let pointer = new SMap.Control.Pointer({ "showDistance": true });
-        map.addControl(pointer);
-        pointer.setCoords(SMap.Coords.fromWGS84(parkingMachines[i].longitude, parkingMachines[i].latitude));
+        //let pointer = new SMap.Control.Pointer({ "showDistance": true });
+        //map.addControl(pointer);
+        //pointer.setCoords(SMap.Coords.fromWGS84(parkingMachines[i].longitude, parkingMachines[i].latitude));
     }
-
-    markerLayer.redraw(false);
     console.log("Redrew marker layer with new parking machines");
 }

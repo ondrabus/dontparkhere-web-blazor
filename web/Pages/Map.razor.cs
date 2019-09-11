@@ -36,9 +36,9 @@ namespace DontParkHere.Pages
         public static decimal Latitude { get; set; }
         public static decimal Longitude { get; set; }
         public static Area IntersectingArea { get; set; }
-        public static List<ParkingMachine> ParkingMachines { get; set; }
         public static List<VisitorRestriction> VisitorRestrictions { get; set; }
         public static bool OverlappingAreas { get; set; } = false;
+        public static List<ParkingMachine> ParkingMachines { get; set; }
 
         private bool _initialized = false;
 
@@ -80,12 +80,12 @@ namespace DontParkHere.Pages
                 else
                 {
                     IntersectingArea = area;
-                    VisitorRestrictions = RestrictionService.GetActiveVisitorRestrictions(area.Restrictions.Where(r => r as VisitorRestriction != null).Cast<VisitorRestriction>().ToList());
+                    VisitorRestrictions = await RestrictionService.GetActiveVisitorRestrictions(area.Restrictions.Where(r => r as VisitorRestriction != null).Cast<VisitorRestriction>().ToList());
 
                     // draw parking machines on the map
                     var parkingMachines = await ParkingMachineService.GetNearestParkingMachines(location);
                     ParkingMachines = parkingMachines;
-                    await JSRuntime.InvokeAsync<object>("mapSetParkingMachines", parkingMachines.First().LocationObj, parkingMachines.Skip(1).First().LocationObj);
+                    await JSRuntime.InvokeAsync<object>("mapSetParkingMachines", parkingMachines[0].LocationObj, parkingMachines[1].LocationObj);
                 }
             }
 
